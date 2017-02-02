@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="TIYAngularApp">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/master-controller.js"></script>
+<head>
+
+<style>
+
+   div#pick{
+   float:right
+   }
+
+   div#mypick{
+   display:inline;
+   }
+
+   div#playerpick{
+   display:inline;
+   }
+
+   div#menu li {
+    display:inline;
+
+    ul#menus li {
+    display:inline;
+}
+}
+
+
+</style>
+</head>
+
+<body ng-controller="MasterController">
+{{! changing the mustache delimiter so it doesn't conflict with  }}
+{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}
+{{=<% %>=}}
+<h1>Welcome to MasterMind</h1>
+
+<ol type="1">
+    <%#list-of-items%>
+
+
+    <%/list-of-items%>
+
+</ol>
+
+<%^list-of-items%>
+
+<p>No task created.</p>
+
+<%/list-of-items%>
+
+
+
+
+<div>
+    <ul >
+        <li ng-repeat="result in lastMove.colors">
+            <img ng-src="images/{{result}}.png" style="width:50px;height:50px">
+        </li>
+    </ul>
+</div>
+
+<div>
+    <ul >
+        <li ng-repeat="myresult in lastMove.colors">
+            <img ng-src="images/{{myresult}}.png" style="width:50px;height:50px">
+
+        </li>
+    </ul>
+</div>
+<input type="button" click="start_game()" value="Start New Game"/>
+
+
+<select id="mySelect1" ng-model="colorContainer.colors1" ng-options="o as o for o in color_list"></select>
+<select id="mySelect2" ng-model="colorContainer.colors2" ng-options="o as o for o in color_list"></select>
+<select id="mySelect3" ng-model="colorContainer.colors3" ng-options="o as o for o in color_list"></select>
+<select id="mySelect4" ng-model="colorContainer.colors4" ng-options="o as o for o in color_list"></select>
+
+
+<div id="user">
+    <!--<p>Enter color by number : <input type="text" ng-model="color">-->
+        <input type="button" ng-click="make_color()" value="SUBMIT"/>
+</div>
+
+    <h2>Cpu pick</h2>
+    <ul>
+        <li ng-repeat="cpu in cpuSlot">
+            <img ng-src="images/{{cpu}}.png" style="width:50px;height:50px">
+        </li>
+    </ul>
+
+    <h2>player pick</h2>
+<div>
+    <ol>
+    <li ng-repeat="guessResult in resultContainer">
+        <br>
+        <ol>
+            <li ng-repeat = "color in guessResult.colors track by $index">
+                <img ng-src="images/{{color}}.png" style="width:50px;height:50px">
+            </li>
+        </ol>
+        </li>
+    </ol>
+</div>
+<input type="button" ng-click="make_slot()" value="SUBMIT"/>
+<input type="button" ng-click="get_cpu_slot()" value="Cpu Results"/>
+<input type="button" ng-click="white_black()" value="HINT"/>
+<div>
+    <ol>
+        <li ng-repeat="play in resultContainer track by $index">
+            <ul>
+                <li ng-repeat ="color in play.pins track by $index">
+                    <img ng-src="images/{{color}}.png" style="width:20px;height:20px">
+                </li>
+            </ul>
+
+        </li>
+    </ol>
+</div>
+
+</body>
+</html>
